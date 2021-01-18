@@ -1,1 +1,97 @@
-aa
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+	<title>FILM</title>
+</head>
+<style>
+    .display-1{
+        text-align: center
+    }
+
+    .b1{
+        margin : auto;
+    }
+
+    .b2{
+        margin : auto;
+    }
+
+</style>
+<body>
+	<div id="demo">
+        <h1 class="display-1">Liste des films</h1>
+        <button class=b1 v-on:click="mode = 'populaire'" >Populaire</button>
+        <button class=b2 v-on:click="mode = 'note'" >Mieux Notés</button>
+        
+		<div class="container-fluid" v-for="film in films" v-if="mode == 'populaire'">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{film.original_title}}</h5>
+                <small>Date de sortie : {{film.release_date}}</small>
+              </div>
+              <p class="mb-1">{{film.overview}}</p>
+              <small>Popularité : {{film.popularity}} et note : {{film.vote_average}}</small>
+            </a>
+          </div>
+
+          <div class="container-fluid" v-for="film2 in films2" v-if="mode == 'note'">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{film2.original_title}}</h5>
+                <small>Date de sortie : {{film2.release_date}}</small>
+              </div>
+              <p class="mb-1">{{film2.overview}}</p>
+              <small>Popularité : {{film2.popularity}} et note : {{film2.vote_average}}</small>
+            </a>
+          </div>
+
+		
+	</div>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+        const apiURL = 'https://api.themoviedb.org/3/movie/popular?api_key=e9636c61227e7046782144773490aee5&language=fr&page=1'
+        const apiURL2 = ' https://api.themoviedb.org/3/movie/top_rated?api_key=e9636c61227e7046782144773490aee5&language=fr&page=1'
+       
+
+		const demo = new Vue({
+            el: '#demo',
+            data: {
+                films: "",
+                films2:"",
+                mode: ''
+            },
+            created: function () {
+                this.fetchData(),
+                this.fetchData2()
+			},
+            methods: {
+			  	// Version promesse et fonction fléchée
+                  fetchData: async function () {
+					try {
+					  	const response = await axios.get(apiURL)
+						console.log(response.data)
+                        this.films = response.data.results
+                        console.log(this.films) 
+					} catch (error) {
+						console.log(error);
+					}
+                },
+                fetchData2: async function () {
+					try {
+					  	const response = await axios.get(apiURL2)
+						console.log(response.data)
+                        this.films2 = response.data.results
+                        console.log(this.films2) 
+					} catch (error) {
+						console.log(error);
+					}
+				}
+            }
+		})
+	</script>
+</body>
+</html>
