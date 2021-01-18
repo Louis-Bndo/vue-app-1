@@ -7,24 +7,30 @@
 	<title>FILM</title>
 </head>
 <style>
+    body{
+        background-color: beige;
+    }
+
     .display-1{
         text-align: center
     }
 
-    .b1{
-        margin : auto;
+    .centre{
+  text-align: center;
     }
 
-    .b2{
-        margin : auto;
+    .list-group-item{
+        background-color: azure;
     }
 
 </style>
 <body>
-	<div id="demo">
+	<div id="demo" >
+        <div class= "centre">
         <h1 class="display-1">Liste des films</h1>
-        <button class=b1 v-on:click="mode = 'populaire'" >Populaire</button>
-        <button class=b2 v-on:click="mode = 'note'" >Mieux Notés</button>
+        <button class="btn btn-primary btn-lg" v-on:click="mode = 'populaire'" >Populaire</button>
+        <button class="btn btn-lg btn-primary" v-on:click="mode = 'note'" >Mieux Notés</button>
+        </div>
         
 		<div class="container-fluid" v-for="film in films" v-if="mode == 'populaire'">
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
